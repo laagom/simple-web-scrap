@@ -10,7 +10,7 @@ def scrap_view(request):
     base_url = "https://weworkremotely.com/remote-jobs/search?utf8=%E2%9C%93&term="
 
     # 이후에 검색할 입력 값으로 동적으로 변경 
-    search_word = "java"
+    search_word = "python"
 
     # 요청 후 응답 받기
     response = get(f"{base_url}{search_word}")
@@ -35,11 +35,11 @@ def scrap_view(request):
             for post in job_posts:
                 anchors = post.find_all('a')
                 anchor  = anchors[1]
+                title   = anchor.find('span', class_='title')
                 link    = f'https://weworkremotely.com{anchor["href"]}'
 
                 # company 키워드로 탐색한 3개의 요소를 각각 할당
                 company, kind, region = anchor.find_all('span', class_='company')
-                title                 = anchor.find('span', class_='title')
 
                 job_data = {
                     'company' : company.string,
@@ -49,6 +49,7 @@ def scrap_view(request):
                     'url'     : link
                 }
                 results.append(job_data)
+                
         for result in results:
             print(result)
             print('--------------')
