@@ -18,7 +18,7 @@ def idd_jobs(keyword):
     #        : 크롬으로 접근 후 indeed로 접근시켜 indeed가 bot으로 인지하지 못하게 함
 
     chrome_options = Options()
-    chrome_options.add_experimental_option("detach", True) # 브라우저 꺼짐 방지 코드
+    # chrome_options.add_experimental_option("detach", True) # 브라우저 꺼짐 방지 코드
 
     # 크롬드라이버를 최신으로 유지해줍니다.
     browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = chrome_options) 
@@ -28,17 +28,26 @@ def idd_jobs(keyword):
     job_list = soup.find("ul", class_="jobsearch-ResultsList")
     jobs = job_list.find_all('li', recursive=False)
 
+    results = []
+
     for job in jobs:
         zone = job.find("div", class_="mosaic-zone")
         if zone == None:
-            print("job li")
-        else:
-            print("mosaic li")
-    
+            anchor   = job.select_one("h2 a")
+            title    = anchor['aria-label']
+            link     = anchor['href']
+            company  = job.find("span", class_="companyName")
+            location = job.find("div", class_="companyLocation")
 
-    
+            job_data = {
+                'company' : company.string,
+                'region' : location.string,
+                'position' : title,
+                'url' : f'https://kr.indeed.com{link}'
+            }
+            results.append(job_data)
 
-    
+    return results
 
 
 

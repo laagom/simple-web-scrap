@@ -38,8 +38,8 @@ def wwr_jobs(keyword):
                     'company' : company.string,
                     'region'  : region.string,
                     'position': title.string,
-                    'kind'    : kind.string,
-                    'url'     : link
+                    # 'kind'    : kind.string,
+                    'url'     : link,
                 }
                 results.append(job_data)
                 
