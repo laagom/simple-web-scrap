@@ -12,6 +12,6 @@ def wwr_crap_view(request):
     return HttpResponse(result)
 
 def idd_crap_view(request):
-    result = idd_jobs('react')
+    result = idd_jobs('python')
 
     return HttpResponse(result)

@@ -1,9 +1,11 @@
 from requests import get
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+
 
 def idd_jobs(keyword):
     # Issue Indeed 403 Fix
@@ -20,8 +22,19 @@ def idd_jobs(keyword):
 
     # 크롬드라이버를 최신으로 유지해줍니다.
     browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = chrome_options) 
-    
     browser.get("https://kr.indeed.com/jobs?q=python")
+
+    soup = BeautifulSoup(browser.page_source, "html.parser")
+    job_list = soup.find("ul", class_="jobsearch-ResultsList")
+    jobs = job_list.find_all('li', recursive=False)
+
+    for job in jobs:
+        zone = job.find("div", class_="mosaic-zone")
+        if zone == None:
+            print("job li")
+        else:
+            print("mosaic li")
+    
 
     
 
