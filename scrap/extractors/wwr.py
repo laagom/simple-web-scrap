@@ -1,9 +1,9 @@
 from requests import get
 from bs4 import BeautifulSoup
 
-def extract_wwr_jobs(keyword):
+def wwr_jobs(keyword):
     
-    # 요청 사이트 url
+    # we work remotely 사이트 검색 url
     base_url = "https://weworkremotely.com/remote-jobs/search?utf8=%E2%9C%93&term="
 
     # 요청 후 응답 받기
@@ -12,7 +12,6 @@ def extract_wwr_jobs(keyword):
     # 응답 상태 코드에 따른 분기 처리
     if response.status_code != 200:
         print("Can't request website")
-
     else:
         results = []
 
