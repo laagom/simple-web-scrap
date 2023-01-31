@@ -25,10 +25,10 @@
  > - selenium==4.8.0<br>
  >  : 브라우저에 동적이 자동화 기능을 넣기 위해 beautifulsoup 대체제
  
- > - chromedriver
+ > - chromedriver<br>
  >  : selenium으로 크롭에 접근하기 위한 드라이버
 
- > - webdriver-manager==3.8.5
+ > - webdriver-manager==3.8.5<br>
  >  : 크롭드라이버를 최신 버전으로 유지 하기 위한 패키지 
 
 <br>
