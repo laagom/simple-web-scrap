@@ -25,7 +25,7 @@ secret = json.load(open(os.path.join(SERCETS_DIR, "secret.json")))
 TEMPLATES_DIR = [BASE_DIR / 'templates']
 
 # STATICS_DIR
-STATICSFILES_DIR = [BASE_DIR / 'statics']
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
