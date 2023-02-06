@@ -42,5 +42,5 @@ def jobs_wwr(keyword):
                     'url'     : link,
                 }
                 results.append(job_data)
-                
+
     return results
