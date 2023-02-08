@@ -11,20 +11,41 @@ def get_browser(keyword, page=0):
     """ Issue Indeed 403 Fix
         ------------------------------------------------------
         내용    : 초기 indeed사이트 접근시 bot인지 구분 없이 접근 허용
-                 현재 bot으로 접근하는 경우 차단되어 403 상태 코드 발생
+               : 현재 bot으로 접근하는 경우 차단되어 403 상태 코드 발생
         ------------------------------------------------------
         해결방법 : BeautifulSoup 대체제로 Selenuium 사용
                : Selenium은 코드를 사용해서 브라우저를 자동화 할 수 있음
                : 크롬으로 접근 후 indeed로 접근시켜 indeed가 bot으로 인지하지 못하게 함
     """
+
+    """ Issue headless 옵션 추가
+        ------------------------------------------------------
+        내용    : Selenium으로 사이트 접근 시 설정한 브라우저가 켜지는 현상
+        ------------------------------------------------------
+        해결방법 : option에 --headless 추가
+               : 특정 사이트는 headless탐지하여 막고있기 때문에 user-agent설정을 
+               : 일반적인 Chrome에서 접근한 것 처럼 설정 값 변경
+    """
     
+    # 옵션 생성
     chrome_options = Options()
     # chrome_options.add_experimental_option("detach", True) # 브라우저 꺼짐 방지 코드
 
+    # 창 숨기는 옵션 추가
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
+
+    # 그래픽 카드를 가속하지 않는 옵션 추가
+    chrome_options.add_argument("--disable-gpu")
+
     # 크롬드라이버를 최신으로 유지해줍니다.
+    base_url  = 'https://kr.indeed.com/jobs'
+    final_url = f"{base_url}?q={keyword}&start={page*10}"
+
     browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = chrome_options) 
-    browser.get(f"https://kr.indeed.com/jobs?q={keyword}&start={page*10}")
-    print(f'Requesting https://kr.indeed.com/jobs?q={keyword}&start={page*10}')
+    browser.get(final_url)
+    print(final_url)
+    
     return browser
 
 
@@ -76,7 +97,8 @@ def jobs_idd(keyword):
                     'url'      : f'https://kr.indeed.com{link}'
                 }
                 results.append(job_data)
-
+    
+    browser.quit()
     return results
 
 

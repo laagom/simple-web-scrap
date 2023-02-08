@@ -1,11 +1,11 @@
 'use strict'
 
-async function search_keyword(){
+async function search_keyword(type){
     const keyword = document.querySelector('#keyword').value    // 검색 키워드
     if (keyword != ''){
-        const response = await fetch(`/scrap/wwr?keyword=`+keyword)
+        const response = await fetch(`/scrap/${type}?keyword=`+keyword)
         const result   = await response.json()
-        let content  = document.querySelector('#content')
+        let content    = document.querySelector('#content')
 
         empty_content(content)  // 렌더링 영역 초기화
         render_content(result)  // 결과 값 렌더링
@@ -26,5 +26,8 @@ function render_content(result){
         })
 }
 
-const btnSearch = document.querySelector('#btnSearch')
-btnSearch.addEventListener('click', search_keyword)
+const btnIdd = document.querySelector('#searchIdd')
+const btnWwr = document.querySelector('#searchWwr')
+
+btnIdd.addEventListener('click', ()=>search_keyword('idd'))
+btnWwr.addEventListener('click', ()=>search_keyword('wwr'))

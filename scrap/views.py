@@ -15,7 +15,7 @@ def wwr_crap_view(request):
         result = jobs_wwr(keyword)
         return HttpResponse(json.dumps(result), content_type='application/json')
 
-def idd_crap_view(request, keyword):
+def idd_crap_view(request):
     keyword = request.GET.get('keyword')
     if keyword is not None:
         result = jobs_idd(keyword)
