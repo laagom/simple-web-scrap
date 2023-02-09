@@ -8,6 +8,8 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 def get_browser(keyword, page=0):
+    ''' #### Selenium 브라우저 접근 #### '''
+
     """ Issue Indeed 403 Fix
         ------------------------------------------------------
         내용    : 초기 indeed사이트 접근시 bot인지 구분 없이 접근 허용
@@ -45,13 +47,12 @@ def get_browser(keyword, page=0):
     browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = chrome_options) 
     browser.get(final_url)
     print(final_url)
-    
+
     return browser
 
 
 def get_page_count(keyword):
-    """ 접속 페이지의 paging 개수
-    """
+    """ #### 접속 페이지의 paging 개수 #### """
     browser = get_browser(keyword)
     soup = BeautifulSoup(browser.page_source, "html.parser")
     pagination = soup.find("nav", attrs={"aria-label": "pagination"})
@@ -92,7 +93,7 @@ def jobs_idd(keyword):
 
                 job_data = {
                     'company'  : company.string,
-                    'region'   : location.string,
+                    'location'   : location.string,
                     'position' : title,
                     'url'      : f'https://kr.indeed.com{link}'
                 }

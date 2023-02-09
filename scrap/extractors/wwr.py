@@ -36,9 +36,8 @@ def jobs_wwr(keyword):
 
                 job_data = {
                     'company' : company.string,
-                    'region'  : region.string,
+                    'location': region.string,
                     'position': title.string,
-                    # 'kind'    : kind.string,
                     'url'     : link,
                 }
                 results.append(job_data)

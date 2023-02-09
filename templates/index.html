@@ -8,12 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 검색</title>
     <script defer src="{% static 'js/search.js' %}"></script>  
+    <script defer src="{% static 'js/export.js' %}"></script>  
 </head>
 <body>
     <div>
         <input type="text" name="keyword" id="keyword">
         <input type="button" value="wwr 검색" name="search" id="searchWwr">
         <input type="button" value="idd 검색" name="search" id="searchIdd">
+        <input type="button" value="엑셀" name="export" id="exportExcel">
+        <br>
+        <div>-------------------------------------------------------</div>
         <div name="content" id="content"></div>
     </div>
 </body>
