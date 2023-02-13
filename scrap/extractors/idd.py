@@ -1,11 +1,22 @@
+from functools import wraps
 from requests import get
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-
 from webdriver_manager.chrome import ChromeDriverManager
+import time
+
+def timeit(func):
+    @wraps(func)
+    def timeit_wrapper(*args, **kwargs):
+        start_time = time.perf_counter()
+        result = func(*args, **kwargs)
+        end_time = time.perf_counter()
+        total_time = end_time - start_time
+        print(f'Function {func.__name__}{args} {kwargs} Took {total_time:.4f} seconds')
+        return result
+    return timeit_wrapper
 
 def get_browser(keyword, page=0):
     ''' #### Selenium 브라우저 접근 #### '''
@@ -40,11 +51,11 @@ def get_browser(keyword, page=0):
     # 그래픽 카드를 가속하지 않는 옵션 추가
     chrome_options.add_argument("--disable-gpu")
 
-    # 크롬드라이버를 최신으로 유지해줍니다.
+    # 크롬드라이버를 최신으로 유지
     base_url  = 'https://kr.indeed.com/jobs'
     final_url = f"{base_url}?q={keyword}&start={page*10}"
 
-    browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options = chrome_options) 
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options) 
     browser.get(final_url)
     print(final_url)
 
@@ -69,7 +80,7 @@ def get_page_count(keyword):
     else:
         return count
 
-
+@timeit
 def jobs_idd(keyword):
     # 페이징 페이지 수
     pages = get_page_count(keyword)
@@ -92,17 +103,12 @@ def jobs_idd(keyword):
                 location = job.find("div", class_="companyLocation")
 
                 job_data = {
-                    'company'  : company.string,
-                    'location'   : location.string,
-                    'position' : title,
+                    'company'  : company.string.replace(',', ' '),
+                    'location' : location.string.replace(',', ' '),
+                    'position' : title.replace(',', ' '),
                     'url'      : f'https://kr.indeed.com{link}'
                 }
                 results.append(job_data)
     
     browser.quit()
     return results
-
-
-
-
-

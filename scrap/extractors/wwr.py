@@ -35,9 +35,9 @@ def jobs_wwr(keyword):
                 company, kind, region = anchor.find_all('span', class_='company')
 
                 job_data = {
-                    'company' : company.string,
-                    'location': region.string,
-                    'position': title.string,
+                    'company' : company.string.replace(',', ' '),
+                    'location': region.string.replace(',', ' '),
+                    'position': title.string.replace(',', ' '),
                     'url'     : link,
                 }
                 results.append(job_data)

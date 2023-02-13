@@ -34,14 +34,41 @@
 <br>
 
  ## Issue
-> ***[23-01-31] Indeed 사이트를 BeatifulSoup으로 접근 시 bot으로 판단하여 접근 차단*** <br>
+> ***1. [23-01-31] Indeed 사이트를 BeatifulSoup으로 접근 시 bot으로 판단하여 접근 차단*** <br>
 > 
 > - 해결방법 : 동적으로 접근할 수 있는 기능이 있는 Selenium을 사용하여 브라우저 접근 후 Indeed로 접속할 수 있게 개선
 
 >
 
-> ***[23-02-07] Selenium으로 사이트에 접근 시 운영체제에서 브라우저를 띄워 접근*** <br>
+> ***2. [23-02-07] Selenium으로 사이트에 접근 시 운영체제에서 브라우저를 띄워 접근*** <br>
 >
 > - 해결방법 : option에 브라우저를 띄우지 않는 옵션 headless를 추가 후 특정 사이트에서는 headless까지 탐지하기 때문에 탐지 할 수 없게 user-agent 값을 변경하여 Chrome에서 접근한 것처럼 변경
 
+>
+
+> ***3. [23-02-09] Selenium 속도 개선 필요*** <br>
+>
+> - 처리방법
+> 1. 드라이버를 Headless 옵션주기 (`Issue 2 처리 완료`)
+> ```python
+>   # 창 숨기는 옵션 추가
+>    chrome_options.add_argument('--headless')
+>    chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
+> ```
+
+>
+
+> ***4. [23-02-13] .csv파일로 생성 중 하나의 keyword애 해당하는 내용에에 ','가 포함***<br>
+> - ex) 아래와 같이 데이터 정제 중 Position, Company, Location등 해당하는 내용에 ','가 포함되어 순서가 어긋나는 경우 발생
+![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-13%20%EC%98%A4%ED%9B%84%203.28.35.png)
+>
+> - 처리방법: 데이터 정제 과정에서 keyword(Position, Company, Location)의 ','가 되는 내용을 빈 string으로 대체
+> ```python
+> job_data = {
+>                    'company' : company.string.replace(',', ' '),
+>                    'location': region.string.replace(',', ' '),
+>                    'position': title.string.replace(',', ' '),
+>                    'url'     : link,
+>                }
+> ```
 
