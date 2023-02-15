@@ -7,17 +7,6 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-def timeit(func):
-    @wraps(func)
-    def timeit_wrapper(*args, **kwargs):
-        start_time = time.perf_counter()
-        result = func(*args, **kwargs)
-        end_time = time.perf_counter()
-        total_time = end_time - start_time
-        print(f'Function {func.__name__}{args} {kwargs} Took {total_time:.4f} seconds')
-        return result
-    return timeit_wrapper
-
 def get_browser(keyword, page=0):
     ''' #### Selenium 브라우저 접근 #### '''
 
@@ -61,7 +50,6 @@ def get_browser(keyword, page=0):
 
     return browser
 
-
 def get_page_count(keyword):
     """ #### 접속 페이지의 paging 개수 #### """
     browser = get_browser(keyword)
@@ -80,7 +68,6 @@ def get_page_count(keyword):
     else:
         return count
 
-@timeit
 def jobs_idd(keyword):
     # 페이징 페이지 수
     pages = get_page_count(keyword)
