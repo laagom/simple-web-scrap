@@ -7,18 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 검색</title>
+
+    <!-- script -->
     <script defer src="{% static 'js/search.js' %}"></script>  
-    <script defer src="{% static 'js/export.js' %}"></script>  
+    <script defer src="{% static 'js/export.js' %}"></script> 
+    
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    <div><h1>Job Scrapper</h1></div>
     <div>
-        <input type="text" name="keyword" id="keyword">
+        <h2>What job do you want?</h2>
+        <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please" style="width: 300px;">
         <input type="button" value="wwr 검색" name="search" id="searchWwr">
         <input type="button" value="idd 검색" name="search" id="searchIdd">
         <input type="button" value="엑셀" name="export" id="exportExcel">
         <br>
-        <div>-------------------------------------------------------</div>
-        <div name="content" id="content"></div>
+        <div>----------------------------------------------------------------------</div>
+        <div name="content" id="content" style="width:1600px;">
+            <table class='table employ-table' id="tblEmploy">
+                <colgroup>
+                    <col style="width: 100px;">
+                    <col style="width: 600px;">
+                    <col style="width: 150px;">
+                    <col style="width: 150px;">
+                    <col style="width: 480px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Postion</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody id="bodyContent"></tbody>
+            </table>
+        </div>
     </div>
 </body>
 

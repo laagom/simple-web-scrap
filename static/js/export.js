@@ -1,8 +1,7 @@
-let content     = document.querySelector('#keyword')
 const btnExport = document.querySelector('#exportExcel')
 
 btnExport.addEventListener('click',()=>{
-    let keyword = content.value
+    let keyword = document.querySelector('#keyword').value
     if (keyword != ''){
         const response = fetch(`/export/excel?keyword=${keyword}`)
     }else{

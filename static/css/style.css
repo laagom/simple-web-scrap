@@ -1,0 +1,22 @@
+.center {
+    text-align: center;
+}
+
+.table {
+    border: 1px solid;
+    table-layout: fixed;
+}
+
+/* employ-table */
+.employ-table tr {
+    height: 40px;
+} 
+
+.employ-table tr td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 1px solid;
+    max-width: 500px;
+    overflow: hidden;
+} 
+
