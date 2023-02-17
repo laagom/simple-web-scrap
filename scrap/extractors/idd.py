@@ -101,4 +101,4 @@ def jobs_idd(keyword):
     results['list'] = list
     browser.quit()
     
-    return results
+    return [results]

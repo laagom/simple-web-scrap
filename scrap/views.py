@@ -1,33 +1,32 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.http import JsonResponse
 from scrap.extractors.wwr import jobs_wwr
 from scrap.extractors.idd import jobs_idd
+from scrap.file import save_to_file
 
 import os
 import json
 
-from scrap.file import save_to_file
+db = {}
+
 
 def index(request):
     return render(request, 'index.html/')
 
-def wwr_crap_view(request):
-    ''' #### we work remotely 사이트 채용공고 스크랩 #### '''
+def scrap_view(request):
+    ''' #### 사이트 채용공고 스크랩 #### '''
 
     keyword = request.GET.get('keyword')
-    if keyword is not None:
-        result = jobs_wwr(keyword)
-        save_to_file(keyword, result, 'We Work Remotely') # 검색 결과 엑셀 출력
+    jobs = {}
+    if keyword != '':
+        
+        if keyword in db:
+            jobs[keyword] = db[keyword]
+        else:
+            wwr = jobs_wwr(keyword)
+            idd = jobs_idd(keyword)
+            jobs[keyword] = wwr+idd
+            db[keyword] = wwr+idd
+        # save_to_file(keyword, jobs) # 검색 결과 엑셀 출력
 
-        return HttpResponse(json.dumps(result), content_type='application/json')
-
-def idd_crap_view(request):
-    ''' #### Indeed 사이트 채용공고 스크랩 #### '''
-    keyword = request.GET.get('keyword')
-
-    if keyword is not None:
-        result = jobs_idd(keyword)
-        save_to_file(keyword, result, 'Indeed') # 검색 결과 엑셀 출력
-
-        return HttpResponse(json.dumps(result), content_type='application/json')
+    return HttpResponse(json.dumps(jobs[keyword]), content_type='application/json')

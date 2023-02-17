@@ -44,4 +44,4 @@ def jobs_wwr(keyword):
                 list.append(job_data)
         results['list'] = list
 
-    return results
+    return [results]

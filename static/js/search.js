@@ -1,32 +1,36 @@
 'use strict'
 const content = document.querySelector('#content')
 
-function search_keyword(){
+async function search_keyword(){
+    /* 검색(search)버튼 클릭 시 검색 키워드 채용공고 내용 스크랩 */
     const keyword = document.querySelector('#keyword').value    // 검색 키워드
-    if (keyword != ''){
-        const idd = fetch(`/scrap/idd?keyword=`+keyword).then(response => response.json())         
-        const wwr = fetch(`/scrap/wwr?keyword=`+keyword).then(response => response.json())
+    if(keyword != ''){
+        const response = await fetch(`/scrap?keyword=`+keyword)
+        const results = await response.json()
+    
+        empty_content(content.querySelector('tbody'))  // 렌더링 영역 초기화
+        results.map((res)=>{
+            render_content(res['list'], res['site'])
+        })
+    }
+}
 
-        Promise.all([idd, wwr])
-            .then(results=>{
-                empty_content(content)  // 렌더링 영역 초기화
-                
-                results.map((result)=>{
-                    render_content(result['list'], result['site'])
-                })
-            })
-    }else{
-        alert('검색어를 입력해 주세요.')
+function enter_search(event){
+    /* input에서 enter시 검색(search) 트리거 */
+    if(event.keyCode === 13){
+        btnSearch.click()
     }
 }
 
 function empty_content(element){
-    element.childNodes.forEach((e, i)=>{
-        element.removeChild(element.childNodes[i])
-    })
+    /* 요소 안의 내용을 모두 지우는 초기화 함수 */
+    while(element.hasChildNodes()){
+        element.removeChild(element.firstChild);
+    }
 }
 
 function render_content(result, site){
+    /* 스크랩한 공고 내용 렌더링 */
     const thead = document.querySelector('#headContent')
     const tbody = document.querySelector('#bodyContent')
 
@@ -79,5 +83,9 @@ function render_content(result, site){
 }
 
 const btnSearch = document.querySelector('#searchEmploy')
-
 btnSearch.addEventListener('click', ()=>search_keyword())
+
+const inputText =  document.querySelector('#keyword')
+inputText.addEventListener('keypress', (event)=>enter_search(event))
+
+search_keyword()
