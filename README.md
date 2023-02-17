@@ -2,8 +2,8 @@
 
 ## Goal
 여러가지 사이트를 스크랩해서 스크랩 내용을 엑셀로 정리할 수 있는 기능 구현
-![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-18%20%EC%98%A4%EC%A0%84%201.03.34.png)
-
+![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-18%20%EC%98%A4%EC%A0%84%201.03.34.png) |![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-18%20%EC%98%A4%EC%A0%84%204.33.44.png)
+--- | --- | 
 <br>
 
 ## List
