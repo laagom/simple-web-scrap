@@ -33,6 +33,16 @@
 
 <br>
 
+## Libraries
+> - [Pico css](https://picocss.com/docs/)<br>
+>   : css을 간편하게 적용시켜주기 위한 라이브러리<br>
+>   : 기본적인 css코드만 작성한 후 불필요한 코드의 양을 늘리지 않기 위해 사용한다.  
+
+![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-17%20%EC%98%A4%ED%9B%84%208.53.11.png) |![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-17%20%EC%98%A4%ED%9B%84%208.54.34.png)
+--- | --- | 
+
+<br>
+
  ## Issue
 > ***1. [23-01-31] Indeed 사이트를 BeatifulSoup으로 접근 시 bot으로 판단하여 접근 차단*** <br>
 > 

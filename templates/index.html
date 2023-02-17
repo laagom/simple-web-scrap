@@ -13,37 +13,41 @@
     
     <!-- css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet  " href="{% static 'css/pico.min.css' %}">
 </head>
 <body>
-    <div><h1>Job Scrapper</h1></div>
-    <div>
-        <h2>What job do you want?</h2>
-        <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please" style="width: 300px;">
-        <input type="button" value="Search" name="search" id="searchEmploy">
-        <br>
-        <div>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</div>
-        <div name="content" id="content" style="width:1600px;">
-            <table class='table employ-table' id="tblEmploy">
-                <colgroup>
-                    <col style="width: 100px;">
-                    <col style="width: 600px;">
-                    <col style="width: 150px;">
-                    <col style="width: 150px;">
-                    <col style="width: 480px;">
-                </colgroup>
-                <thead id="headContent">
-                    <tr class="hd-tr">
-                        <th>Number</th>
-                        <th>Postion</th>
-                        <th>Company</th>
-                        <th>Location</th>
-                        <th>URL</th>
-                    </tr>
-                </thead>
-                <tbody id="bodyContent"></tbody>
-            </table>
+    <main class="container">
+        <div><h2>Job Scrapper</h1></div>
+        <div>
+            <h3>What job do you want?</h2>
+            <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please">
+            <input type="button" value="Search" name="search" id="searchEmploy">
+            <br>
+            <div>
+                <div class="employ-table-wrapper" name="content" id="content">
+                    <table class='table employ-table' id="tblEmploy" role="grid">
+                        <colgroup>
+                            <col style="width: 130px;">
+                            <col style="width: 500px;">
+                            <col style="width: 150px;">
+                            <col style="width: 150px;">
+                            <col style="width: 100px;">
+                        </colgroup>
+                        <thead id="headContent">
+                            <tr class="hd-tr center">
+                                <th>Number</th>
+                                <th>Postion</th>
+                                <th>Company</th>
+                                <th>Location</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyContent"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 
 </html>

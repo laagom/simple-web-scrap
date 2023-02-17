@@ -1,3 +1,10 @@
+/* common */
+.table {
+    table-layout: fixed;
+    border: 1px solid;
+}
+
+/* add commmon */
 .bg-black {
     background-color: black;
 }
@@ -10,26 +17,56 @@
     text-align: center;
 }
 
-.table {
-    border: 1px solid;
-    table-layout: fixed;
+.fs10 {
+    font-size: 10px;
 }
 
+.fs15 {
+    font-size: 15px;
+}
+
+.fs20 {
+    font-size: 20px;
+}
+
+
 /* employ-table */
+
+.employ-table-wrapper{
+    width: 100%;
+    height: 700px;
+    overflow: auto;
+}
+
+.employ-table {
+    border-collapse: collapse;
+    border: 0px;
+
+}
+
+.employ-table tr th {
+    background-color: whitesmoke !important;
+    position: sticky;
+    top: 0px;
+    text-align: center;
+}
+
 .employ-table tr {
     height: 40px;
+    font-size: 15px;
 } 
 
 .employ-table tr:hover:not(.hd-tr)  {
-    background-color: darkgray;
+    background-color: skyblue;
+    color: white !important;
+    font-size: large;
 }
 
 .employ-table tr td {
     text-overflow: ellipsis;
     white-space: nowrap;
     border: 1px solid;
-    max-width: 500px;
     overflow: hidden;
     padding: 5px;
+    font-size: 15px;
 } 
-

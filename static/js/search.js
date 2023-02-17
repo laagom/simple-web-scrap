@@ -35,10 +35,9 @@ function render_content(result, site){
     tbody.appendChild(site_tr)
 
     const site_td = document.createElement('td')
-    console.log(thead.childNodes)
     site_td.colSpan = thead.querySelector('tr').querySelectorAll('th').length
     site_td.innerText = site
-    site_td.className = 'center bg-black color-white'
+    site_td.className = 'center bg-black color-white fs15'
     site_tr.appendChild(site_td)
 
     // site 스크랩 공고 렌더링
@@ -72,8 +71,8 @@ function render_content(result, site){
         const url_a = document.createElement('a')
         url_td.appendChild(url_a)
         url_a.href = e.url
-        url_a.title = e.url
-        url_a.innerText = e.url
+        url_a.title = 'Apply Now'
+        url_a.innerText = 'Apply Now'
         url_a.setAttribute('title', e.url)
         url_a.setAttribute('target', '_blank')
     })
