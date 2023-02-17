@@ -12,7 +12,7 @@ def save_to_file(file_name, jobs, site):
     file = open(f'files/{file_name}({site}).csv', 'w')
     file.write(f'{site}\n')
     file.write('Number,Postion,Company,Location,URL\n')
-    for number, job in enumerate(jobs):
+    for number, job in enumerate(jobs['list']):
         file.write(f'{number+1},{job["position"]},{job["company"]},{job["location"]},{job["url"]}\n')
     file.close()
 

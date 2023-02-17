@@ -72,7 +72,9 @@ def jobs_idd(keyword):
     # 페이징 페이지 수
     pages = get_page_count(keyword)
     
-    results = []
+    results = {'site':'Indeed'}
+    list = []
+
     for page in range(pages):
         browser = get_browser(keyword, page)
         
@@ -95,7 +97,8 @@ def jobs_idd(keyword):
                     'position' : title.replace(',', ' '),
                     'url'      : f'https://kr.indeed.com{link}'
                 }
-                results.append(job_data)
-    
+                list.append(job_data)
+    results['list'] = list
     browser.quit()
+    
     return results

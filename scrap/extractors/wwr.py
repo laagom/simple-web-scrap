@@ -13,7 +13,8 @@ def jobs_wwr(keyword):
     if response.status_code != 200:
         print("Can't request website")
     else:
-        results = []
+        results = {'site':'We Work Remotely'}
+        list = []
 
         # html 파싱
         soup = BeautifulSoup(response.text, "html.parser")
@@ -40,6 +41,7 @@ def jobs_wwr(keyword):
                     'position': title.string.replace(',', ' '),
                     'url'     : link,
                 }
-                results.append(job_data)
+                list.append(job_data)
+        results['list'] = list
 
     return results

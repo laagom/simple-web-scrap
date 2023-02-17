@@ -8,11 +8,12 @@ function search_keyword(){
         const wwr = fetch(`/scrap/wwr?keyword=`+keyword).then(response => response.json())
 
         Promise.all([idd, wwr])
-            .then(result=>{
+            .then(results=>{
                 empty_content(content)  // 렌더링 영역 초기화
-
-                render_content(result[0], 'Indeed') // 렌더링
-                render_content(result[1], 'We Work Remotely') // 렌더링
+                
+                results.map((result)=>{
+                    render_content(result['list'], result['site'])
+                })
             })
     }else{
         alert('검색어를 입력해 주세요.')
