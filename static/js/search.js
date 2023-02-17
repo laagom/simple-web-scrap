@@ -1,14 +1,19 @@
 'use strict'
 const content = document.querySelector('#content')
 
-async function search_keyword(type){
+function search_keyword(){
     const keyword = document.querySelector('#keyword').value    // 검색 키워드
     if (keyword != ''){
-        const response = await fetch(`/scrap/${type}?keyword=`+keyword)
-        const result   = await response.json()
+        const idd = fetch(`/scrap/idd?keyword=`+keyword).then(response => response.json())         
+        const wwr = fetch(`/scrap/wwr?keyword=`+keyword).then(response => response.json())
 
-        empty_content(content)  // 렌더링 영역 초기화
-        render_content(result)  // 결과 값 렌더링
+        Promise.all([idd, wwr])
+            .then(result=>{
+                empty_content(content)  // 렌더링 영역 초기화
+
+                render_content(result[0], 'Indeed') // 렌더링
+                render_content(result[1], 'We Work Remotely') // 렌더링
+            })
     }else{
         alert('검색어를 입력해 주세요.')
     }
@@ -20,9 +25,22 @@ function empty_content(element){
     })
 }
 
-function render_content(result){
+function render_content(result, site){
+    const thead = document.querySelector('#headContent')
     const tbody = document.querySelector('#bodyContent')
 
+    // site 제목 렌더링
+    const site_tr = document.createElement('tr')
+    tbody.appendChild(site_tr)
+
+    const site_td = document.createElement('td')
+    console.log(thead.childNodes)
+    site_td.colSpan = thead.querySelector('tr').querySelectorAll('th').length
+    site_td.innerText = site
+    site_td.className = 'center bg-black color-white'
+    site_tr.appendChild(site_td)
+
+    // site 스크랩 공고 렌더링
     result.map((e, i)=>{   
         const tr = document.createElement('tr')
         tbody.appendChild(tr)
@@ -30,7 +48,7 @@ function render_content(result){
         const num_td = document.createElement('td')
         tr.appendChild(num_td)
         num_td.className = 'center'
-        num_td.innerText = i
+        num_td.innerText = i+1
 
         const position_td = document.createElement('td')
         tr.appendChild(position_td)
@@ -59,8 +77,6 @@ function render_content(result){
     })
 }
 
-const btnIdd = document.querySelector('#searchIdd')
-const btnWwr = document.querySelector('#searchWwr')
+const btnSearch = document.querySelector('#searchEmploy')
 
-btnIdd.addEventListener('click', ()=>search_keyword('idd'))
-btnWwr.addEventListener('click', ()=>search_keyword('wwr'))
+btnSearch.addEventListener('click', ()=>search_keyword())

@@ -18,6 +18,8 @@ def wwr_crap_view(request):
     keyword = request.GET.get('keyword')
     if keyword is not None:
         result = jobs_wwr(keyword)
+        save_to_file(keyword, result, 'We Work Remotely') # 검색 결과 엑셀 출력
+
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 def idd_crap_view(request):
@@ -26,6 +28,6 @@ def idd_crap_view(request):
 
     if keyword is not None:
         result = jobs_idd(keyword)
-        save_to_file(keyword, result) # 검색 결과 엑셀 출력
+        save_to_file(keyword, result, 'Indeed') # 검색 결과 엑셀 출력
 
         return HttpResponse(json.dumps(result), content_type='application/json')

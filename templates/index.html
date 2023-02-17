@@ -10,7 +10,6 @@
 
     <!-- script -->
     <script defer src="{% static 'js/search.js' %}"></script>  
-    <script defer src="{% static 'js/export.js' %}"></script> 
     
     <!-- css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -20,9 +19,7 @@
     <div>
         <h2>What job do you want?</h2>
         <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please" style="width: 300px;">
-        <input type="button" value="wwr 검색" name="search" id="searchWwr">
-        <input type="button" value="idd 검색" name="search" id="searchIdd">
-        <input type="button" value="엑셀" name="export" id="exportExcel">
+        <input type="button" value="Search" name="search" id="searchEmploy">
         <br>
         <div>----------------------------------------------------------------------</div>
         <div name="content" id="content" style="width:1600px;">
@@ -34,7 +31,7 @@
                     <col style="width: 150px;">
                     <col style="width: 480px;">
                 </colgroup>
-                <thead>
+                <thead id="headContent">
                     <tr>
                         <th>Number</th>
                         <th>Postion</th>

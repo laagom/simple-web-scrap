@@ -3,13 +3,14 @@ import os
 from django.http import HttpResponse
 from requests import request
 
-def save_to_file(file_name, jobs):
+def save_to_file(file_name, jobs, site):
     ''' #### Json형식 결과물 출력 #### '''
     directory = 'files/'
 
     create_folder(directory)    # 다운로드 폴더 생성 
 
-    file = open(f'files/{file_name}.csv', 'w')
+    file = open(f'files/{file_name}({site}).csv', 'w')
+    file.write(f'{site}\n')
     file.write('Number,Postion,Company,Location,URL\n')
     for number, job in enumerate(jobs):
         file.write(f'{number+1},{job["position"]},{job["company"]},{job["location"]},{job["url"]}\n')
