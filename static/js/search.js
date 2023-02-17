@@ -75,6 +75,7 @@ function render_content(result, site){
         url_a.title = e.url
         url_a.innerText = e.url
         url_a.setAttribute('title', e.url)
+        url_a.setAttribute('target', '_blank')
     })
 }
 

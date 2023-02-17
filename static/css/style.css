@@ -20,11 +20,16 @@
     height: 40px;
 } 
 
+.employ-table tr:hover:not(.hd-tr)  {
+    background-color: darkgray;
+}
+
 .employ-table tr td {
     text-overflow: ellipsis;
     white-space: nowrap;
     border: 1px solid;
     max-width: 500px;
     overflow: hidden;
+    padding: 5px;
 } 
 
