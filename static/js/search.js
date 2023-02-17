@@ -1,3 +1,5 @@
+import {initial} from './common.js';
+
 'use strict'
 const content = document.querySelector('#content')
 
@@ -12,6 +14,10 @@ async function search_keyword(){
         results.map((res)=>{
             render_content(res['list'], res['site'])
         })
+
+        // keyword가 변경때마다 파일출력 url 변경        
+        const anchor = document.querySelector('#export')
+        anchor.href = `/export?keyword=${keyword}`
     }
 }
 
@@ -76,7 +82,7 @@ function render_content(result, site){
         url_td.appendChild(url_a)
         url_a.href = e.url
         url_a.title = 'Apply Now'
-        url_a.innerText = 'Apply Now'
+        url_a.innerText = 'Apply Now ➤'
         url_a.setAttribute('title', e.url)
         url_a.setAttribute('target', '_blank')
     })
@@ -88,4 +94,6 @@ btnSearch.addEventListener('click', ()=>search_keyword())
 const inputText =  document.querySelector('#keyword')
 inputText.addEventListener('keypress', (event)=>enter_search(event))
 
+// initial()로 초기 셋팅 후 search_keyword()로 자동 검색
+initial()
 search_keyword()

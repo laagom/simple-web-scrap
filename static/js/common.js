@@ -24,4 +24,6 @@ function initial(){
     storageSet()        // input 입력 시 storage 저장 이벤트
 }
 
-initial()  // 초기 셋팅 
+export {
+    initial
+};
