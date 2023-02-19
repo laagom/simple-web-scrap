@@ -1,3 +1,4 @@
+'use strict'
 const btnExport = document.querySelector('#export')
 
 btnExport.addEventListener('click', ()=>document_export())

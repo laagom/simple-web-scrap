@@ -1,12 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- js -->
+    <script defer src="{% static 'js/home.js' %}"></script> 
+
     <!-- css -->
-    <link rel="stylesheet" href="/static/css/pico.min.css">
-    <link rel="stylesheet" href="/static/css/home.css"/>
+    <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <title>JOB & SCRAPPER</title>
 </head>
 <body>
@@ -21,35 +25,35 @@
                 <span class="loader hidden"></span>
             </hgroup>
             <div class="button-container">
-                <a class="popular" href="/result?keyword=python">
+                <a class="popular" href="/search?keyword=python">
                     <img class="logo" src="/static/assets/logo/python.png" />
                     <span class="logo-text python">python</span>
                 </a>
-                <a class="popular" href="/result?keyword=django">
+                <a class="popular" href="/search?keyword=django">
                     <img class="logo" src="/static/assets/logo/django.png" />
                     <span class="logo-text django">django</span>
                 </a>
-                <a class="popular" href="/result?keyword=java">
+                <a class="popular" href="/search?keyword=java">
                     <img class="logo" src="/static/assets/logo/java.png" />
                     <span class="logo-text java">java</span>
                 </a>
-                <a class="popular" href="/result?keyword=spring">
+                <a class="popular" href="/search?keyword=spring">
                     <img class="logo" src="/static/assets/logo/spring.png" />
                     <span class="logo-text spring">spring</span>
                 </a>
-                <a class="popular" href="/result?keyword=javascript">
+                <a class="popular" href="/search?keyword=javascript">
                     <img class="logo" src="/static/assets/logo/javascript.png" />
                     <span class="logo-text js">javascript</span>
                 </a>
-                <a class="popular" href="/result?keyword=typescript">
+                <a class="popular" href="/search?keyword=typescript">
                     <img class="logo" src="/static/assets/logo/typescript.png" />
                     <span class="logo-text ts">typescript</span>
                 </a>
-                <a class="popular" href="/result?keyword=react">
+                <a class="popular" href="/search?keyword=react">
                     <img class="logo" src="/static/assets/logo/react.png" />
                     <span class="logo-text react">react</span>
                 </a>
-                <a class="popular" href="/result?keyword=node">
+                <a class="popular" href="/search?keyword=node">
                     <img class="logo" src="/static/assets/logo/node.png" />
                     <span class="logo-text node">node</span>
                 </a>
@@ -59,7 +63,7 @@
         <section>
             <h4>Which job do you search?</h4>
             <div class="form-container">
-                <form class="form" action="/result">
+                <form class="form" action="/search">
                     <input type="text" name="keyword" placeholder="Enter the job you want to search for ~ !" required
                         autofocus class="form-input" />
                     <button class="submit-button" type="submit">Search</button>
@@ -67,21 +71,5 @@
             </div>
         </section>
     </main>
-    <script>
-        const loader = document.querySelector('.loader')
-        const subTitle = document.querySelector('.sub-title')
-        const form = document.querySelector('.form');
-        const links = document.querySelectorAll('.popular');
-        links.forEach((link) => {
-            link.addEventListener('click', () => {
-                loader.classList.remove('hidden');
-                subTitle.classList.add('hidden');
-            });
-        });
-        form.addEventListener('submit', () => {
-            loader.classList.remove('hidden');
-            subTitle.classList.add('hidden');
-        });
-    </script>
 </body>
 </html>

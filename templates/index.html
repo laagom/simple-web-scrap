@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 검색</title>
 
-    <!-- script -->
+    <!-- js -->
     <script type="module" src="{% static 'js/common.js' %}"></script>  
-    <script type="module" src="{% static 'js/search.js' %}"></script>  
+    <script type="module" src="{% static 'js/index.js' %}"></script>  
     <script defer src="{% static 'js/export.js' %}"></script>  
     
     <!-- css -->
@@ -21,7 +21,7 @@
         <div><h2>💼 WORK SEARCH</h1></div>
         <div>
             <h3>Let's find our own jobs!</h2><a target="_blank" class="fr export" id="export">Export to file</a>
-            <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please">
+            <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please" value="{{keyword}}">
             <input type="button" value="Search" name="search" id="searchEmploy">
             <br>
             <div>
