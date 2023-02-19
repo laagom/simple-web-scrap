@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,14 +13,14 @@
     <script defer src="{% static 'js/export.js' %}"></script>  
     
     <!-- css -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
 </head>
 <body>
     <main class="container">
-        <div><h2>Job Scrapper</h1></div>
+        <div><h2>💼 WORK SEARCH</h1></div>
         <div>
-            <h3>What job do you want?</h2><a target="_blank" class="fr" id="export">Export to file</a>
+            <h3>Let's find our own jobs!</h2><a target="_blank" class="fr export" id="export">Export to file</a>
             <input type="text" name="keyword" id="keyword" placeholder="Write one keyword please">
             <input type="button" value="Search" name="search" id="searchEmploy">
             <br>

@@ -11,7 +11,7 @@ import json
 db = {}
 
 def index(request):
-    return render(request, 'index.html/')
+    return render(request, 'home.html/')
 
 def scrap_view(request):
     ''' #### 사이트 채용공고 스크랩 #### '''
@@ -37,9 +37,9 @@ def scrap_view(request):
 def export_view(request, **kwards):
     keyword = request.GET.get('keyword')
 
-    if keyword == None or keyword == '':    # keyword가 없이 접근
+    if keyword == None or keyword == '': # keyword가 없이 접근
         return redirect("/")
-    if keyword not in db:   # keyword는 있지만 스크랩 없이 접근
+    if keyword not in db: # keyword는 있지만 스크랩 없이 접근
         return redirect("/")
     
     save_to_file(keyword, db) # 검색 결과 엑셀 출력
