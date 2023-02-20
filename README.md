@@ -128,7 +128,7 @@
 
 >
 
-> ***6. [23-02-20] 클라이언트와 서버 통신을 fetch에서 axios로 변경
+> ***6. [23-02-20] 클라이언트와 서버 통신을 fetch에서 axios로 변경***
 >
 > - 변경사유
 > 1. fetch로 서버통신 시 response를 받았을 때 JSON 타입으로 변경하는 코드가 추가 되지만 axios를 사용할 경우 response가 반드시 JSON 타입으로 자동 문자열 변환(stringify)하기 때문에 코드를 간소화 할 수 있음
@@ -137,21 +137,21 @@
 
 ```javascript
 // 화면 로딩 시 progress bar 진행률 보여주기 
-            const options = {
-                responsType: 'blob',
-                onDownloadProgress: function(progressEvnet) {
-                    const percentComplete = Math.floor((progressEvnet.loaded / progressEvnet.total)*100)
-                    fill.style.width = percentComplete+"%"
-                    text.textContent = percentComplete+"%"
-                }
-            }
+const options = {
+    responsType: 'blob',
+    onDownloadProgress: function(progressEvnet) {
+        const percentComplete = Math.floor((progressEvnet.loaded / progressEvnet.total)*100)
+        fill.style.width = percentComplete+"%"
+        text.textContent = percentComplete+"%"
+    }
+}
 
-            const response = await axios.get(`/scrap?keyword=`+keyword, options)
-            const results = await response.data
+const response = await axios.get(`/scrap?keyword=`+keyword, options)
+const results = await response.data
 
-            // 초기화 & 렌더링
-            removeElements(grids)  
-            results.map((res)=>{
-                render_content(res['list'], res['site'])
-            })
+// 초기화 & 렌더링
+removeElements(grids)  
+results.map((res)=>{
+    render_content(res['list'], res['site'])
+})
 ```
