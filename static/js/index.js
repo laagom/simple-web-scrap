@@ -1,19 +1,18 @@
 import {initial} from './common.js';
 
 'use strict'
-const content = document.querySelector('#content')
-
 async function search_keyword(){
     /* 검색(search)버튼 클릭 시 검색 키워드 채용공고 내용 스크랩 */
     const keyword = document.querySelector('#keyword').value    // 검색 키워드
+    const grids = document.querySelectorAll('.grid') 
+
     if(keyword != ''){
         const response = await fetch(`/scrap?keyword=`+keyword)
         const results = await response.json()
-    
-        // empty_content(content)  // 렌더링 영역 초기화
+        // console.log(grids)
+        removeElements(grids)  // 렌더링 영역 초기화
         results.map((res)=>{
-            // render_content(res['list'], res['site'])
-            render_contents(res['list'], res['site'])
+            render_content(res['list'], res['site'])
         })
 
         // keyword가 변경때마다 파일출력 url 변경        
@@ -29,14 +28,16 @@ function enter_search(event){
     }
 }
 
-function empty_content(element){
-    /* 요소 안의 내용을 모두 지우는 초기화 함수 */
-    while(element.hasChildNodes()){
-        element.removeChild(element.firstChild);
+function removeElements(args) {
+    /* 요소 제거 함수 */
+    if(args.length != 0){
+        args.forEach((e)=>{
+            e.remove()
+        })
     }
 }
 
-function render_contents(result, site){
+function render_content(result, site){
     const container = document.querySelector('.container')
 
     result.map((e, i)=>{
@@ -46,15 +47,15 @@ function render_contents(result, site){
         container.appendChild(grid_div)
 
         const time_div = document.createElement('div')
-        time_div.className = 'searched__item'
+        time_div.className = 'searched_item'
         grid_div.appendChild(time_div)
 
         const item_img = document.createElement('img')
-        item_img.className = 'col-md-2 col-sm-1 searched__logo'
+        item_img.className = 'col-md-2 col-sm-1 searched_logo'
         time_div.appendChild(item_img)
 
         const detail_div = document.createElement('div')
-        detail_div.className = 'col-md-6 col-sm-8 searched__detail'
+        detail_div.className = 'col-md-6 col-sm-8 searched_detail'
         time_div.appendChild(detail_div)
 
         const detail_company = document.createElement('h4')
@@ -70,85 +71,21 @@ function render_contents(result, site){
         detail_div.appendChild(detail_site)
 
         const site_img = document.createElement('img')
-        site_img.className = 'col-md-2 searched__source'
-        site_img.src = '/static/assets/logo/python.png'
+        site_img.className = 'col-md-2 searched_source'
+        site_img.src = site == 'Indeed'? '/static/assets/logo/idd.png' : '/static/assets/logo/wwr.jpeg'
         time_div.appendChild(site_img)
-    })
 
-    // <div class="grid">
-    //     <div class="row searched__item">
+        const apply_div = document.createElement('div')
+        apply_div.className = 'col-md-2 col-sm-2 searched_apply'
+        time_div.appendChild(apply_div)
 
-    //         <img class="col-md-2 col-sm-1 searched__logo"
-    //             src="https://remoteok.com/cdn-cgi/image/format=auto,fit=contain,width=100,height=100,quality=50/https://remoteok.com/assets/img/jobs/771700ecb3a12f9fe4da669bf6a0f1b21676790981.png?1676790981" />
-
-    //         <div class="col-md-6 col-sm-8 searched__detail">
-    //             <h4>NOBI</h4>
-    //             <div>Software Engineer</div>
-    //             <div>Worldwide</div>
-    //         </div>
-
-    //         <img class="col-md-2 searched__source" src="/static/images/rok_logo.png" />
-
-    //         <div class="col-md-2 col-sm-2 searched__apply">
-    //             <a class="btn btn-primary"
-    //                 href="https://remoteok.com/remote-jobs/remote-software-engineer-nobi-196804"
-    //                 role="button" target="_blank">Apply</a>
-    //         </div>
-    //     </div>
-    // </div>
-}
-
-
-function render_content(result, site){
-    /* 스크랩한 공고 내용 렌더링 */
-    const thead = document.querySelector('#headContent')
-    const tbody = document.querySelector('#bodyContent')
-
-    // site 제목 렌더링
-    const site_tr = document.createElement('tr')
-    tbody.appendChild(site_tr)
-
-    const site_td = document.createElement('td')
-    site_td.colSpan = thead.querySelector('tr').querySelectorAll('th').length
-    site_td.innerText = site
-    site_td.className = 'center bg-black color-white fs15'
-    site_tr.appendChild(site_td)
-
-    // site 스크랩 공고 렌더링
-    result.map((e, i)=>{   
-        const tr = document.createElement('tr')
-        tbody.appendChild(tr)
-
-        const num_td = document.createElement('td')
-        tr.appendChild(num_td)
-        num_td.className = 'center'
-        num_td.innerText = i+1
-
-        const position_td = document.createElement('td')
-        tr.appendChild(position_td)
-        position_td.innerText = e.position
-        position_td.setAttribute('title', e.position)
-
-        const company_td = document.createElement('td')
-        tr.appendChild(company_td)
-        company_td.innerText = e.company
-        company_td.setAttribute('title', e.company)
-
-        const location_td = document.createElement('td')
-        tr.appendChild(location_td)
-        location_td.innerText = e.location
-        location_td.setAttribute('title', e.location)
-
-        const url_td = document.createElement('td')
-        tr.appendChild(url_td)
-
-        const url_a = document.createElement('a')
-        url_td.appendChild(url_a)
-        url_a.href = e.url
-        url_a.title = 'Apply Now'
-        url_a.innerText = 'Apply Now ➤'
-        url_a.setAttribute('title', e.url)
-        url_a.setAttribute('target', '_blank')
+        const apply_a = document.createElement('a')
+        apply_a.className = 'btn btn-primary'
+        apply_a.href = e.url
+        apply_a.setAttribute('role', 'button')
+        apply_a.setAttribute('target', '_blank')
+        apply_a.innerText = 'Apply'
+        apply_div.appendChild(apply_a)
     })
 }
 

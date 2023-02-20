@@ -24,13 +24,16 @@
 ---
 > ***2차 구현***
 
-![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-19%20%EC%98%A4%ED%9B%84%208.38.02.png) |![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-19%20%EC%98%A4%ED%9B%84%208.38.10.png)
+![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-19%20%EC%98%A4%ED%9B%84%208.38.02.png) |![Alt text](static/references/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-02-21%20%EC%98%A4%EC%A0%84%2012.35.24.png)
 --- | --- | 
 > ***기능 사항***
 >   - 홈 화면 구현
 >   - 홈 화면에서 아이콘을 클릭하여 손쉽게 검색 가능
 >   - 아이콘 클릭 및 Search 버튼 클릭 시 조회 화면 이동 및 데이터 조회
+>   - 조회 화면 테이블 사용에서 -> 구현한 디자인으로 변경 작업
 
+> ***필요 개선 사항***
+>   - 스크랩한 공고의 logo를 가져와서 조회 화면에 노출해 주기
 
 <br>
 

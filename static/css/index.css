@@ -43,51 +43,12 @@ body {
 
 /* employ-table */
 
-.employ-table-wrapper{
-    width: 100%;
-    height: 700px;
-    overflow: auto;
-}
-
-.employ-table {
-    border-collapse: collapse;
-    border: 0px;
-
-}
-
-.employ-table tr th {
-    background-color: whitesmoke !important;
-    position: sticky;
-    top: 0px;
-    text-align: center;
-}
-
-.employ-table tr {
-    height: 40px;
-    font-size: 15px;
-} 
-
-.employ-table tr:hover:not(.hd-tr)  {
-    background-color: skyblue;
-    color: white !important;
-    font-size: large;
-}
-
-.employ-table tr td {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    border: 1px solid;
-    overflow: hidden;
-    padding: 5px;
-    font-size: 15px;
-} 
-
 .export {
     color: black;
     font-weight: 500;
 }
 
-.container {
+.content {
     flex: 1;
     position: relative;
     width: 95%;
@@ -98,18 +59,18 @@ body {
     /* color: #EDF0F3; */
 }
 
-.searched__header {
+.searched_header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.searched__header {
+.searched_header {
 margin: 10px 0px 20px;
 }
 
-.searched__item {
+.searched_item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -120,50 +81,50 @@ margin: 10px 0px 20px;
     border-radius: 8px;
 }
 
-.searched__logo__undefined,
-.searched__logo,
-.searched__source {
+.searched_logo__undefined,
+.searched_logo,
+.searched_source {
     display: none;
 }
 
-.searched__detail {
+.searched_detail {
     display: flex;
     flex-direction: column;
     width: 65%;
 }
 
-.searched__apply {
+.searched_apply {
     width: fit-content;
 }
 
 @media (min-width: 576px) { 
-    .searched__detail {
+    .searched_detail {
         width: 65%;
     }
 }
 
 @media (min-width: 768px) {
-    .searched__header {
+    .searched_header {
         margin: 10px 0px 30px;
     }
-    .searched__keyword {
+    .searched_keyword {
         transform: translateX(-2%)
     }
-    .searched__export {
+    .searched_export {
         transform: translateX(2%)
     }
-    .searched__logo__undefined {
+    .searched_logo_undefined {
         display: contents;
         font-size: 100px;
     }
-    .searched__logo,
-    .searched__source {
+    .searched_logo,
+    .searched_source {
         display: inherit;
         width: 100px;
         padding: 0;
         border-radius: 8px;
     }
-    .searched__detail {
+    .searched_detail {
         width: 45%;
     }
 }
