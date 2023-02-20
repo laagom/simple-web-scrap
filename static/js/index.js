@@ -3,21 +3,52 @@ import {initial} from './common.js';
 'use strict'
 async function search_keyword(){
     /* 검색(search)버튼 클릭 시 검색 키워드 채용공고 내용 스크랩 */
-    const keyword = document.querySelector('#keyword').value    // 검색 키워드
+    const keyword = document.querySelector('.keyword').value
     const grids = document.querySelectorAll('.grid') 
-
+    
     if(keyword != ''){
-        const response = await fetch(`/scrap?keyword=`+keyword)
-        const results = await response.json()
-        // console.log(grids)
-        removeElements(grids)  // 렌더링 영역 초기화
-        results.map((res)=>{
-            render_content(res['list'], res['site'])
-        })
+        try {
+            const progress = document.querySelector('.progress-bar')
+            const fill     = document.querySelector('.progress-bar-fill')
+            const text     = document.querySelector('.progress-text')
+            const search   = document.querySelector('.search')
+            
+            // 검색버튼 숨김 & progress창 표시
+            search.classList.toggle('hidden')
+            progress.classList.toggle('hidden')
 
-        // keyword가 변경때마다 파일출력 url 변경        
-        const anchor = document.querySelector('#export')
-        anchor.href = `/export?keyword=${keyword}`
+            // 화면 로딩 시 progress bar 진행률 보여주기 
+            const options = {
+                responsType: 'blob',
+                onDownloadProgress: function(progressEvnet) {
+                    const percentComplete = Math.floor((progressEvnet.loaded / progressEvnet.total)*100)
+                    fill.style.width = percentComplete+"%"
+                    text.textContent = percentComplete+"%"
+                }
+            }
+
+            const response = await axios.get(`/scrap?keyword=`+keyword, options)
+            const results = await response.data
+
+            // 초기화 & 렌더링
+            removeElements(grids)  
+            results.map((res)=>{
+                render_content(res['list'], res['site'])
+            })
+
+            // keyword가 변경때마다 파일출력 url 변경        
+            const anchor = document.querySelector('.export')
+            anchor.href = `/export?keyword=${keyword}`
+
+            // 검색버튼 표시 & progress창 숨김 & progress 상태 초기화
+            search.classList.toggle('hidden')
+            progress.classList.toggle('hidden')
+            fill.style.width = 0+"%"
+            text.textContent = 0+"%"
+
+        } catch(err) {
+            console.log("Error >>", err)
+        }
     }
 }
 

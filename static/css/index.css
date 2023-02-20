@@ -128,3 +128,27 @@ margin: 10px 0px 20px;
         width: 45%;
     }
 }
+
+.progress-bar {
+    width: 100%;
+    background-color: whitesmoke;
+    padding: 2px;
+    margin-bottom: 1rem;
+}
+.progress-bar-fill {
+    display: block;
+    height: 64px;
+    background-color: #65ef88;
+    border-radius: 3px;
+    width: 0%;
+        
+    transition: width 30ms ease-in-out;
+}
+.progress-text {
+    align-content: center;
+    font-size: 1.2rem;
+    padding: 10px;
+    display: inline-block;
+    margin-left: 46.5%;
+    width: 250px;
+}
