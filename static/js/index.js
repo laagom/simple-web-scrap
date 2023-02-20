@@ -10,9 +10,10 @@ async function search_keyword(){
         const response = await fetch(`/scrap?keyword=`+keyword)
         const results = await response.json()
     
-        empty_content(content.querySelector('tbody'))  // 렌더링 영역 초기화
+        // empty_content(content)  // 렌더링 영역 초기화
         results.map((res)=>{
-            render_content(res['list'], res['site'])
+            // render_content(res['list'], res['site'])
+            render_contents(res['list'], res['site'])
         })
 
         // keyword가 변경때마다 파일출력 url 변경        
@@ -34,6 +35,69 @@ function empty_content(element){
         element.removeChild(element.firstChild);
     }
 }
+
+function render_contents(result, site){
+    const container = document.querySelector('.container')
+
+    result.map((e, i)=>{
+
+        const grid_div = document.createElement('div')
+        grid_div.className = 'grid'
+        container.appendChild(grid_div)
+
+        const time_div = document.createElement('div')
+        time_div.className = 'searched__item'
+        grid_div.appendChild(time_div)
+
+        const item_img = document.createElement('img')
+        item_img.className = 'col-md-2 col-sm-1 searched__logo'
+        time_div.appendChild(item_img)
+
+        const detail_div = document.createElement('div')
+        detail_div.className = 'col-md-6 col-sm-8 searched__detail'
+        time_div.appendChild(detail_div)
+
+        const detail_company = document.createElement('h4')
+        detail_company.innerText = e.company
+        detail_div.appendChild(detail_company)
+
+        const detail_position = document.createElement('div')
+        detail_position.innerText = e.position
+        detail_div.appendChild(detail_position)
+
+        const detail_site = document.createElement('div')
+        detail_site.innerText = site
+        detail_div.appendChild(detail_site)
+
+        const site_img = document.createElement('img')
+        site_img.className = 'col-md-2 searched__source'
+        site_img.src = '/static/assets/logo/python.png'
+        time_div.appendChild(site_img)
+    })
+
+    // <div class="grid">
+    //     <div class="row searched__item">
+
+    //         <img class="col-md-2 col-sm-1 searched__logo"
+    //             src="https://remoteok.com/cdn-cgi/image/format=auto,fit=contain,width=100,height=100,quality=50/https://remoteok.com/assets/img/jobs/771700ecb3a12f9fe4da669bf6a0f1b21676790981.png?1676790981" />
+
+    //         <div class="col-md-6 col-sm-8 searched__detail">
+    //             <h4>NOBI</h4>
+    //             <div>Software Engineer</div>
+    //             <div>Worldwide</div>
+    //         </div>
+
+    //         <img class="col-md-2 searched__source" src="/static/images/rok_logo.png" />
+
+    //         <div class="col-md-2 col-sm-2 searched__apply">
+    //             <a class="btn btn-primary"
+    //                 href="https://remoteok.com/remote-jobs/remote-software-engineer-nobi-196804"
+    //                 role="button" target="_blank">Apply</a>
+    //         </div>
+    //     </div>
+    // </div>
+}
+
 
 function render_content(result, site){
     /* 스크랩한 공고 내용 렌더링 */
