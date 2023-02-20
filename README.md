@@ -123,4 +123,35 @@
 > - 처리방법: 처음 검색 시 키워드(keyword)로 스크랩을 해오기 때문에 오래걸리는건 어쩔 수 없다. 하지만 keyword와 검색 리스트를 특정 storage에 저장해 둔 후 다음에 다시 조회 할때 시간이 오래 걸리지 않게 storage에서 정보를 가져와 데이터 처리
 > 
 > 1. input box에 입력되는 키워드(keyword)는 `localStorage`에 저장하여 다음에 접속 시 해당 키워드가 유지되게 설정
+>
 > 2. 한번 스크랩한 공고 내용을 server단의 `가상 db(global 변수)`에 저장하여 다음에 해당 키워드로 검색할 시 이전에 검색한 기록을 가져와 화면에 렌더링 처리 
+
+>
+
+> ***6. [23-02-20] 클라이언트와 서버 통신을 fetch에서 axios로 변경
+>
+> - 변경사유
+> 1. fetch로 서버통신 시 response를 받았을 때 JSON 타입으로 변경하는 코드가 추가 되지만 axios를 사용할 경우 response가 반드시 JSON 타입으로 자동 문자열 변환(stringify)하기 때문에 코드를 간소화 할 수 있음
+>
+> 2. Axios는 호환되는 브라우저를 고려할 필요가 없지만 ajax or fetch의 경우 모든 브라우저를 지원하지 않기 때문에 호환 되는 브라우저를 고려해야함(물론 브라우저에 호환되는 방법은 존재하지만 코드를 바꿔 고려사항을 없애는게 시간이 단축됨)
+
+```javascript
+// 화면 로딩 시 progress bar 진행률 보여주기 
+            const options = {
+                responsType: 'blob',
+                onDownloadProgress: function(progressEvnet) {
+                    const percentComplete = Math.floor((progressEvnet.loaded / progressEvnet.total)*100)
+                    fill.style.width = percentComplete+"%"
+                    text.textContent = percentComplete+"%"
+                }
+            }
+
+            const response = await axios.get(`/scrap?keyword=`+keyword, options)
+            const results = await response.data
+
+            // 초기화 & 렌더링
+            removeElements(grids)  
+            results.map((res)=>{
+                render_content(res['list'], res['site'])
+            })
+```
