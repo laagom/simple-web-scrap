@@ -1,24 +1,13 @@
-from functools import wraps
-from requests import get
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from webdriver_manager.chrome import ChromeDriverManager
-import time
 
-def timeit(func):
-    @wraps(func)
-    def timeit_wrapper(*args, **kwargs):
-        start_time = time.perf_counter()
-        result = func(*args, **kwargs)
-        end_time = time.perf_counter()
-        total_time = end_time - start_time
-        print(f'Function {func.__name__}{args} {kwargs} Took {total_time:.4f} seconds')
-        return result
-    return timeit_wrapper
+from scrap.decorator.common_decorators import timeit
 
-def get_browser(keyword=None, page=0, url=None):
+def get_browser():
     ''' #### Selenium 브라우저 접근 #### '''
 
     """ Issue Indeed 403 Fix
@@ -51,9 +40,35 @@ def get_browser(keyword=None, page=0, url=None):
     # 그래픽 카드를 가속하지 않는 옵션 추가
     chrome_options.add_argument("--disable-gpu")
 
-    # 크롬드라이버를 최신으로 유지
-    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options) 
+    # 속도 향상을 위한 옵션 해제(1: Enable, 2: Disable)
+    # Chrome 브라우저에서 사용되고 있는 다양한 옵션을 사용하지 않게 Disable 처리
+    prefs = {'profile.default_content_setting_values': {'cookies' : 2, 'images': 2, 'plugins' : 2, 'javascript' : 2
+                                                        , 'popups': 2, 'geolocation': 2, 'notifications' : 2
+                                                        , 'auto_select_certificate': 2, 'fullscreen' : 2, 'mouselock' : 2
+                                                        , 'mixed_script': 2, 'media_stream' : 2, 'media_stream_mic' : 2
+                                                        , 'media_stream_camera': 2, 'protocol_handlers' : 2, 'ppapi_broker' : 2
+                                                        , 'automatic_downloads': 2, 'midi_sysex' : 2, 'push_messaging' : 2
+                                                        , 'ssl_cert_decisions': 2, 'metro_switch_to_desktop' : 2, 'protected_media_identifier': 2
+                                                        , 'app_banner': 2, 'site_engagement' : 2, 'durable_storage' : 2
+                                                        }}   
+    chrome_options.add_experimental_option('prefs', prefs)
+    chrome_options.add_argument("start-maximized")
+    chrome_options.add_argument("disable-infobars")
+    chrome_options.add_argument("--disable-extensions")
 
+    # Pageload Strategy 설정 변경
+    caps = DesiredCapabilities().CHROME
+    caps["pageLoadStrategy"] = "none"
+
+    # 크롬드라이버를 최신으로 유지
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    print('Start selenium by Chrome Browser') 
+    return browser
+
+def set_browser(browser, keyword=None, page=0, url=None):
+    '''
+        ### browser : 초기에 옵션 설정한 broswer를 인자로 전달받아 url만 변경
+    '''
     base_url  = 'https://kr.indeed.com/jobs'
     final_url = f"{base_url}?q={keyword}&start={page*10}"
 
@@ -62,9 +77,8 @@ def get_browser(keyword=None, page=0, url=None):
 
     return browser
 
-def get_page_count(keyword):
+def get_page_count(browser, keyword):
     """ #### 접속 페이지의 paging 개수 #### """
-    browser = get_browser(keyword)
     soup = BeautifulSoup(browser.page_source, "html.parser")
     pagination = soup.find("nav", attrs={"aria-label": "pagination"})
 
@@ -75,21 +89,23 @@ def get_page_count(keyword):
     pages = pagination.find_all("div", recursive=False)
     count = len(pages)
 
-    if count >= 2:
-        return 2
+    if count >= 5:
+        return 5
     else:
         return count
 
 @timeit
 def jobs_idd(keyword):
+    browser_obj = get_browser()
+
     # 페이징 페이지 수
-    pages = get_page_count(keyword)
+    pages = get_page_count(browser_obj, keyword)
     
     results = {'site':'Indeed'}
     list = []
 
     for page in range(pages):
-        browser = get_browser(keyword, page)
+        browser = set_browser(browser_obj, keyword, page)
         
         soup     = BeautifulSoup(browser.page_source, "html.parser")
         job_list = soup.find("ul", class_="jobsearch-ResultsList")
@@ -105,11 +121,11 @@ def jobs_idd(keyword):
                 company  = job.find("span", class_="companyName")
                 location = job.find("div", class_="companyLocation")
 
-                browser_item = get_browser(keyword, url=url)
+                browser_item = set_browser(browser_obj, url=url)
                 soup_item = BeautifulSoup(browser_item.page_source, "html.parser")
                 thumbnail_img = soup_item.find('img', class_='jobsearch-JobInfoHeader-logo')
                 thumbnail = thumbnail_img['src'] if thumbnail_img != None else None
-                
+
                 job_data = {
                     'company'  : company.string.replace(',', ' '),
                     'location' : location.string.replace(',', ' '),

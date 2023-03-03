@@ -1,18 +1,8 @@
-from functools import wraps
-import time
-from requests import get
 from bs4 import BeautifulSoup
+from requests import get
 
-def timeit(func):
-    @wraps(func)
-    def timeit_wrapper(*args, **kwargs):
-        start_time = time.perf_counter()
-        result = func(*args, **kwargs)
-        end_time = time.perf_counter()
-        total_time = end_time - start_time
-        print(f'Function {func.__name__}{args} {kwargs} Took {total_time:.4f} seconds')
-        return result
-    return timeit_wrapper
+from scrap.decorator.common_decorators import timeit
+
 
 @timeit
 def jobs_wwr(keyword):
@@ -39,13 +29,13 @@ def jobs_wwr(keyword):
 
             # 마지막 view-all을 클래스를 가진 li 제거
             job_posts.pop(-1)
-            
+
             for post in job_posts:
                 anchors = post.find_all('a')
                 anchor  = anchors[1]
                 title   = anchor.find('span', class_='title')
                 link    = f'https://weworkremotely.com{anchor["href"]}'
-                
+
                 response_item = get(link)
                 soup_item = BeautifulSoup(response_item.text, "html.parser")
                 thumbnail_img = soup_item.find("div", class_="listing-logo").find('img')
@@ -62,6 +52,7 @@ def jobs_wwr(keyword):
                     'thumbnail': thumbnail
                 }
                 list.append(job_data)
+
         results['list'] = list
 
     return [results]
