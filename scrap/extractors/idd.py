@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-def get_browser(keyword, page=0):
+def get_browser(keyword=None, page=0, url=None):
     ''' #### Selenium 브라우저 접근 #### '''
 
     """ Issue Indeed 403 Fix
@@ -41,12 +41,13 @@ def get_browser(keyword, page=0):
     chrome_options.add_argument("--disable-gpu")
 
     # 크롬드라이버를 최신으로 유지
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options) 
+
     base_url  = 'https://kr.indeed.com/jobs'
     final_url = f"{base_url}?q={keyword}&start={page*10}"
 
-    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options) 
-    browser.get(final_url)
-    print(final_url)
+    browser.get(final_url if url == None else url)
+    print(final_url if url == None else url)
 
     return browser
 
@@ -63,8 +64,8 @@ def get_page_count(keyword):
     pages = pagination.find_all("div", recursive=False)
     count = len(pages)
 
-    if count >= 5:
-        return 5
+    if count >= 2:
+        return 2
     else:
         return count
 
@@ -88,16 +89,24 @@ def jobs_idd(keyword):
                 anchor   = job.select_one("h2 a")
                 title    = anchor['aria-label']
                 link     = anchor['href']
+                url      = f'https://kr.indeed.com{link}'
                 company  = job.find("span", class_="companyName")
                 location = job.find("div", class_="companyLocation")
 
+                browser_item = get_browser(keyword, url=url)
+                soup_item = BeautifulSoup(browser_item.page_source, "html.parser")
+                thumbnail_img = soup_item.find('img', class_='jobsearch-JobInfoHeader-logo')
+                thumbnail = thumbnail_img['src'] if thumbnail_img != None else None
+                
                 job_data = {
                     'company'  : company.string.replace(',', ' '),
                     'location' : location.string.replace(',', ' '),
                     'position' : title.replace(',', ' '),
-                    'url'      : f'https://kr.indeed.com{link}'
+                    'url'      : url,
+                    'thumbnail': thumbnail
                 }
                 list.append(job_data)
+                
     results['list'] = list
     browser.quit()
     

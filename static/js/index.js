@@ -80,9 +80,10 @@ function render_content(result, site){
         const time_div = document.createElement('div')
         time_div.className = 'searched_item'
         grid_div.appendChild(time_div)
-
+        
         const item_img = document.createElement('img')
         item_img.className = 'col-md-2 col-sm-1 searched_logo'
+        item_img.setAttribute('src', e.thumbnail == undefined ? "/static/assets/logo/no-pictures.png" : e.thumbnail)
         time_div.appendChild(item_img)
 
         const detail_div = document.createElement('div')

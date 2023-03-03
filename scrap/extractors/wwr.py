@@ -25,12 +25,17 @@ def jobs_wwr(keyword):
 
             # 마지막 view-all을 클래스를 가진 li 제거
             job_posts.pop(-1)
-
+            
             for post in job_posts:
                 anchors = post.find_all('a')
                 anchor  = anchors[1]
                 title   = anchor.find('span', class_='title')
                 link    = f'https://weworkremotely.com{anchor["href"]}'
+                
+                response_item = get(link)
+                soup_item = BeautifulSoup(response_item.text, "html.parser")
+                thumbnail_img = soup_item.find("div", class_="listing-logo").find('img')
+                thumbnail = thumbnail_img["src"]
 
                 # company 키워드로 탐색한 3개의 요소를 각각 할당
                 company, kind, region = anchor.find_all('span', class_='company')
@@ -40,6 +45,7 @@ def jobs_wwr(keyword):
                     'location': region.string.replace(',', ' '),
                     'position': title.string.replace(',', ' '),
                     'url'     : link,
+                    'thumbnail': thumbnail
                 }
                 list.append(job_data)
         results['list'] = list
