@@ -14,9 +14,17 @@ function storageSet(){
     })
 }
 
+function focusSet() {
+    let len = inputBox.value.length
+
+    // input 포커스(포커싱 위치 제일 뒤로)
+    inputBox.focus()
+    inputBox.setSelectionRange(len, len)
+}
+
 function initial(){
-    inputBox.focus()    // input 포커스
-    storageSet()        // input 입력 시 storage 저장 이벤트
+    focusSet()   // input 포커싱
+    storageSet() // input 입력 시 storage 저장 이벤트
 }
 
 export {
