@@ -1,5 +1,46 @@
 # 웹 스크래퍼
 
+Django로 만든 **채용공고 스크래퍼**입니다. 키워드로 We Work Remotely와 Indeed의 공고를 수집해 화면에 보여 주고, CSV 파일로 내려받을 수 있습니다.
+
+## 기술 스택
+
+Python · Django 3.2 · requests · BeautifulSoup4 · Selenium (webdriver-manager)
+
+## 구조
+
+```text
+config/                 Django 설정, 루트 URL
+scrap/
+├─ views.py             홈, 검색, 스크랩, CSV 내보내기 뷰
+├─ extractors/          사이트별 스크랩 (wwr.py, idd.py)
+├─ file.py              스크랩 결과를 CSV로 저장
+└─ decorator/           실행 시간 측정 데코레이터
+templates/              home.html, index.html
+files/                  스크랩 결과 CSV 예시
+```
+
+## 주요 경로
+
+| 경로 | 설명 |
+|---|---|
+| `/` | 홈 화면 |
+| `/search/` | 키워드 검색 화면 |
+| `/scrap/` | 스크랩 실행 (JSON 응답) |
+| `/export/` | 스크랩 결과를 CSV로 다운로드 |
+
+## 실행 방법
+
+```bash
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+mkdir .secrets && echo '{"SECRET_KEY": "임의의 문자열"}' > .secrets/secret.json
+python manage.py runserver
+```
+
+브라우저에서 http://127.0.0.1:8000/ 에 접속합니다. 스크랩에는 Chrome이 필요합니다.
+
+---
+
 ## Objectives
 여러가지 사이트를 스크랩해서 스크랩 내용을 엑셀로 정리할 수 있는 기능 구현
 
